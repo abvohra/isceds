@@ -36,6 +36,46 @@ const HERO_SLIDES = [
   },
 ];
 
+// Full-width static masthead banner (above the hero carousel).
+function buildStaticBanner(document) {
+  const imgCell = document.createElement('div');
+  const img = document.createElement('img');
+  img.src = 'https://www.ishopchangi.com/content/dam/cagishop/brands/lancome/ISC%20Masthead%20Banner_PC_EN_1920%C3%97250px.jpg';
+  img.alt = 'Lancôme at iShopChangi';
+  imgCell.append(img);
+
+  const linkCell = document.createElement('div');
+  const a = document.createElement('a');
+  a.href = '/en/brand/lancome.html';
+  a.textContent = '/en/brand/lancome.html';
+  linkCell.append(a);
+
+  return WebImporter.DOMUtils.createTable([['banner'], [imgCell, linkCell]], document);
+}
+
+// Category CTA links (SKINCARE, MAKEUP, FRAGRANCE, TRAVEL FAVORITES, GENIFIQUE).
+const CATEGORY_LINKS = [
+  { label: 'SKINCARE', href: '/en/brand/lancome/skincare.html' },
+  { label: 'MAKEUP', href: '/en/brand/lancome/makeup.html' },
+  { label: 'FRAGRANCE', href: '/en/brand/lancome/fragrance.html' },
+  { label: 'TRAVEL FAVORITES', href: '/en/brand/lancome/best-seller' },
+  { label: 'GENIFIQUE', href: '/en/brand/lancome/genifique' },
+];
+
+function buildCategoryNav(document) {
+  const rows = CATEGORY_LINKS.map((c) => {
+    const labelCell = document.createElement('div');
+    labelCell.textContent = c.label;
+    const hrefCell = document.createElement('div');
+    const a = document.createElement('a');
+    a.href = c.href;
+    a.textContent = c.href;
+    hrefCell.append(a);
+    return [labelCell, hrefCell];
+  });
+  return WebImporter.DOMUtils.createTable([['category-nav'], ...rows], document);
+}
+
 function buildHeroCarousel(document) {
   const rows = HERO_SLIDES.map((slide) => {
     const imgCell = document.createElement('div');
@@ -91,6 +131,8 @@ export default {
     const main = document.body;
 
     // STEP 1: extract everything while the DOM is intact
+    const staticBanner = buildStaticBanner(document);
+    const categoryNav = buildCategoryNav(document);
     const heroCarousel = buildHeroCarousel(document);
     const cardsBlock = parseCategoryCards(document);
     const seoContent = extractSeoContent(document);
@@ -152,7 +194,19 @@ export default {
     main.innerHTML = '';
 
     // STEP 3: rebuild sections in page order
-    // Section 1: masthead banner carousel
+    // Section 1: full-width static banner
+    const bannerSection = document.createElement('div');
+    bannerSection.append(staticBanner);
+    main.append(bannerSection);
+    main.append(document.createElement('hr'));
+
+    // Section 2: category CTA nav
+    const categorySection = document.createElement('div');
+    categorySection.append(categoryNav);
+    main.append(categorySection);
+    main.append(document.createElement('hr'));
+
+    // Section 3: masthead banner carousel
     if (heroCarousel) {
       const heroSection = document.createElement('div');
       heroSection.append(heroCarousel);

@@ -1,0 +1,14 @@
+.banner {
+  line-height: 0;
+}
+
+.banner picture,
+.banner .banner-link {
+  display: block;
+}
+
+.banner img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
