@@ -76,6 +76,26 @@ function buildCategoryNav(document) {
   return WebImporter.DOMUtils.createTable([['category-nav'], ...rows], document);
 }
 
+// Quick links below the category tiles: VIEW ALL PRODUCTS / STORE LOCATOR.
+const QUICK_LINKS = [
+  { label: 'VIEW ALL PRODUCTS', href: '/en/brand/lancome/view-all' },
+  { label: 'STORE LOCATOR', href: '/en/brand/lancome/store-locator' },
+];
+
+function buildQuickLinks(document) {
+  const rows = QUICK_LINKS.map((c) => {
+    const labelCell = document.createElement('div');
+    labelCell.textContent = c.label;
+    const hrefCell = document.createElement('div');
+    const a = document.createElement('a');
+    a.href = c.href;
+    a.textContent = c.href;
+    hrefCell.append(a);
+    return [labelCell, hrefCell];
+  });
+  return WebImporter.DOMUtils.createTable([['category-nav'], ...rows], document);
+}
+
 function buildHeroCarousel(document) {
   const rows = HERO_SLIDES.map((slide) => {
     const imgCell = document.createElement('div');
@@ -137,6 +157,7 @@ export default {
     // STEP 1: extract everything while the DOM is intact
     const staticBanner = buildStaticBanner(document);
     const categoryNav = buildCategoryNav(document);
+    const quickLinks = buildQuickLinks(document);
     const heroCarousel = buildHeroCarousel(document);
     const cardsBlock = parseCategoryCards(document);
     const seoContent = extractSeoContent(document);
@@ -285,7 +306,13 @@ export default {
       main.append(document.createElement('hr'));
     }
 
-    // Section 4: SEO rich text (default content)
+    // Section 7: quick links (VIEW ALL PRODUCTS / STORE LOCATOR)
+    const quickLinksSection = document.createElement('div');
+    quickLinksSection.append(quickLinks);
+    main.append(quickLinksSection);
+    main.append(document.createElement('hr'));
+
+    // Section 8: SEO rich text (default content)
     if (seoContent) {
       const seoSection = document.createElement('div');
       seoSection.append(seoContent);
