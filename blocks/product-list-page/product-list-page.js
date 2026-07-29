@@ -116,10 +116,65 @@ function renderProduct(item) {
   return li;
 }
 
+// A row is authored product content (not config) when it contains an image.
+function isProductRow(row) {
+  return !!row.querySelector('picture, img');
+}
+
+function renderAuthoredProduct(row) {
+  const cells = [...row.children];
+  const li = document.createElement('li');
+  li.className = 'product-list-page-item';
+
+  const link = row.querySelector('a')?.getAttribute('href');
+  const wrapper = link ? document.createElement('a') : document.createElement('div');
+  if (link) wrapper.href = link;
+  wrapper.className = 'product-list-page-item-link';
+
+  const picture = cells[0]?.querySelector('picture, img');
+  const imageWrap = document.createElement('div');
+  imageWrap.className = 'product-list-page-item-image';
+  if (picture) {
+    const img = picture.tagName === 'IMG' ? picture : picture.querySelector('img');
+    if (img) imageWrap.append(createOptimizedPicture(img.src, img.alt || '', false, [{ width: '400' }]));
+  }
+  wrapper.append(imageWrap);
+
+  const body = document.createElement('div');
+  body.className = 'product-list-page-item-body';
+  const textCell = cells[1];
+  if (textCell) {
+    [...textCell.children].forEach((node) => {
+      const p = document.createElement('p');
+      p.innerHTML = node.innerHTML;
+      const text = node.textContent.trim();
+      if (/^(from|s\$|sgd|\$)/i.test(text) || /\d/.test(text)) p.classList.add('product-list-page-item-price');
+      else if (text.toLowerCase() === 'lancôme' || text.length < 16) p.classList.add('product-list-page-item-brand');
+      else p.classList.add('product-list-page-item-title');
+      body.append(p);
+    });
+  }
+  wrapper.append(body);
+  li.append(wrapper);
+  return li;
+}
+
 export default async function decorate(block) {
+  const rows = [...block.children];
+  const productRows = rows.filter(isProductRow);
   const config = readBlockConfig(block);
   const urlPath = config.urlpath || config['url-path'] || config.urlPath || '';
   const commerce = getCommerceConfig();
+
+  // Authored static products take precedence — mirror the source page exactly.
+  if (productRows.length > 0) {
+    block.textContent = '';
+    const grid = document.createElement('ul');
+    grid.className = 'product-list-page-grid';
+    block.append(grid);
+    productRows.forEach((row) => grid.append(renderAuthoredProduct(row)));
+    return;
+  }
 
   block.textContent = '';
   const grid = document.createElement('ul');

@@ -65,10 +65,50 @@ export default {
     const cardsBlock = parseCategoryCards(document);
     const seoContent = extractSeoContent(document);
 
-    // Commerce block config (not DOM-dependent)
+    // Best Sellers products — static content mirroring the source page.
+    // (The live catalog carousel lazy-loads client-side; these mirror what renders.)
+    const STATIC_PRODUCTS = [
+      {
+        href: '/en/product/lanc-me-genifique-ultimate-serum-mp00314690.html',
+        img: 'https://changiairport.scene7.com/is/image/changiairport/mp00314691-1-lanc-me-1778643023701',
+        brand: 'Lancôme',
+        name: 'LANCÔME Genifique Ultimate Serum',
+        price: 'From S$222.10',
+      },
+      {
+        href: '/en/product/lanc-me-id-le-l-eau-de-parfum-mp00170984.html',
+        img: 'https://changiairport.scene7.com/is/image/changiairport/mp00170986-1-lanc-me-1759308179807',
+        brand: 'Lancôme',
+        name: "LANCÔME Idôle L'Eau De Parfum",
+        price: 'From S$143.10',
+      },
+    ];
+
+    const productRows = STATIC_PRODUCTS.map((p) => {
+      const imgCell = document.createElement('div');
+      const link = document.createElement('a');
+      link.href = p.href;
+      const img = document.createElement('img');
+      img.src = p.img;
+      img.alt = p.name;
+      link.append(img);
+      imgCell.append(link);
+
+      const textCell = document.createElement('div');
+      const brand = document.createElement('p');
+      brand.textContent = p.brand;
+      const name = document.createElement('p');
+      name.textContent = p.name;
+      const price = document.createElement('p');
+      price.textContent = p.price;
+      textCell.append(brand, name, price);
+
+      return [imgCell, textCell];
+    });
+
     const productListPageBlock = WebImporter.DOMUtils.createTable([
       ['product-list-page'],
-      ['urlPath', 'lancome'],
+      ...productRows,
     ], document);
 
     // STEP 2: clear — no DOM queries after this line
