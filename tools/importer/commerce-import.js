@@ -255,9 +255,9 @@ export default {
       ...buildProductRows(STATIC_PRODUCTS),
     ], document);
 
-    // Travel Exclusive — left-aligned heading, exclusive duo gift sets.
+    // Travel Exclusive — centered heading, exclusive duo gift sets.
     const travelExclusivesBlock = WebImporter.DOMUtils.createTable([
-      ['product-list-page (left)'],
+      ['product-list-page'],
       configRow('title', 'Travel Exclusive'),
       ...buildProductRows(TRAVEL_EXCLUSIVE_PRODUCTS),
     ], document);
