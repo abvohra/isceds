@@ -188,19 +188,30 @@ function renderAuthoredProduct(row) {
   return li;
 }
 
-function buildBestSellers(items) {
+function buildProductSection(items, { title = 'Best Sellers', ctaLabel, ctaHref } = {}) {
   const section = document.createElement('div');
   section.className = 'product-list-page-best-sellers';
 
   const heading = document.createElement('h3');
   heading.className = 'product-list-page-heading';
-  heading.textContent = 'Best Sellers';
+  heading.textContent = title;
 
   const grid = document.createElement('ul');
   grid.className = 'product-list-page-grid';
   items.forEach((li) => grid.append(li));
 
   section.append(heading, grid);
+
+  if (ctaLabel) {
+    const ctaWrap = document.createElement('div');
+    ctaWrap.className = 'product-list-page-cta';
+    const cta = document.createElement('a');
+    cta.className = 'product-list-page-cta-link';
+    cta.href = ctaHref || '#';
+    cta.textContent = ctaLabel;
+    ctaWrap.append(cta);
+    section.append(ctaWrap);
+  }
   return section;
 }
 
@@ -209,13 +220,16 @@ export default async function decorate(block) {
   const productRows = rows.filter(isProductRow);
   const config = readBlockConfig(block);
   const urlPath = config.urlpath || config['url-path'] || config.urlPath || '';
+  const title = config.title || 'Best Sellers';
+  const ctaLabel = config.cta || config.ctalabel || '';
+  const ctaHref = config.ctahref || config['cta-href'] || '';
   const commerce = getCommerceConfig();
 
   // Authored static products take precedence — mirror the source page exactly.
   if (productRows.length > 0) {
     const items = productRows.map((row) => renderAuthoredProduct(row));
     block.textContent = '';
-    block.append(buildBestSellers(items));
+    block.append(buildProductSection(items, { title, ctaLabel, ctaHref }));
     return;
   }
 

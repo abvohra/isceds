@@ -162,7 +162,7 @@ export default {
       },
     ];
 
-    const productRows = STATIC_PRODUCTS.map((p) => {
+    const buildProductRows = () => STATIC_PRODUCTS.map((p) => {
       const imgCell = document.createElement('div');
       if (p.badges && p.badges.length) {
         const badgeP = document.createElement('p');
@@ -189,9 +189,29 @@ export default {
       return [imgCell, textCell];
     });
 
-    const productListPageBlock = WebImporter.DOMUtils.createTable([
+    // Config rows are text-only 2-cell rows (no image); product rows contain images.
+    const configRow = (key, value) => {
+      const k = document.createElement('div');
+      k.textContent = key;
+      const v = document.createElement('div');
+      v.textContent = value;
+      return [k, v];
+    };
+
+    // Best Sellers — heading, no CTA.
+    const bestSellersBlock = WebImporter.DOMUtils.createTable([
       ['product-list-page'],
-      ...productRows,
+      configRow('title', 'Best Sellers'),
+      ...buildProductRows(),
+    ], document);
+
+    // Travel Exclusives — reuses the same products, adds a VIEW ALL BEAUTY CTA.
+    const travelExclusivesBlock = WebImporter.DOMUtils.createTable([
+      ['product-list-page'],
+      configRow('title', 'Travel Exclusives'),
+      configRow('cta', 'VIEW ALL BEAUTY'),
+      configRow('ctaHref', '/en/category/beauty'),
+      ...buildProductRows(),
     ], document);
 
     // STEP 2: clear — no DOM queries after this line
@@ -218,13 +238,19 @@ export default {
       main.append(document.createElement('hr'));
     }
 
-    // Section 2: Best Sellers -> commerce product listing
+    // Section 4: Best Sellers -> commerce product listing
     const commerceSection = document.createElement('div');
-    commerceSection.append(productListPageBlock);
+    commerceSection.append(bestSellersBlock);
     main.append(commerceSection);
     main.append(document.createElement('hr'));
 
-    // Section 3: category tiles
+    // Section 5: Travel Exclusives -> second product listing with CTA
+    const travelSection = document.createElement('div');
+    travelSection.append(travelExclusivesBlock);
+    main.append(travelSection);
+    main.append(document.createElement('hr'));
+
+    // Section 6: category tiles
     if (cardsBlock) {
       const cardsSection = document.createElement('div');
       cardsSection.append(cardsBlock);

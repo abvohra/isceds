@@ -26,6 +26,25 @@
   }
 }
 
+.product-list-page .product-list-page-cta {
+  margin-top: 24px;
+  text-align: center;
+}
+
+.product-list-page .product-list-page-cta-link {
+  display: inline-block;
+  font-size: var(--body-font-size-s);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #6b2369;
+  text-decoration: none;
+}
+
+.product-list-page .product-list-page-cta-link:hover {
+  text-decoration: underline;
+}
+
 .product-list-page .product-list-page-item {
   flex: 0 0 auto;
   width: 208px;
