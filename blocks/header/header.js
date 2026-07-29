@@ -180,6 +180,11 @@ export default async function decorate(block) {
   toggleMenu(nav, navSections, isDesktop.matches);
   isDesktop.addEventListener('change', () => toggleMenu(nav, navSections, isDesktop.matches));
 
+  // Top alert notice strip.
+  const alertBar = document.createElement('div');
+  alertBar.className = 'nav-alert';
+  alertBar.innerHTML = '<p>#ALERT: Unauthorized sellers on marketplace platforms are impersonating iShopChangi. Please purchase only from our official website, iShopChangi, and authorised retail partners.</p>';
+
   // Traveller / Non-Traveller toggle bar (sits above the nav row).
   const travellerBar = document.createElement('div');
   travellerBar.className = 'nav-traveller';
@@ -200,6 +205,7 @@ export default async function decorate(block) {
 
   const navWrapper = document.createElement('div');
   navWrapper.className = 'nav-wrapper';
+  navWrapper.append(alertBar);
   navWrapper.append(travellerBar);
   navWrapper.append(nav);
   block.append(navWrapper);
