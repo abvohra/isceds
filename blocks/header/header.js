@@ -180,8 +180,27 @@ export default async function decorate(block) {
   toggleMenu(nav, navSections, isDesktop.matches);
   isDesktop.addEventListener('change', () => toggleMenu(nav, navSections, isDesktop.matches));
 
+  // Traveller / Non-Traveller toggle bar (sits above the nav row).
+  const travellerBar = document.createElement('div');
+  travellerBar.className = 'nav-traveller';
+  travellerBar.innerHTML = `
+    <div class="nav-traveller-toggle" role="tablist" aria-label="Shopper type">
+      <button type="button" class="nav-traveller-option is-active" role="tab" aria-selected="true">Traveller</button>
+      <button type="button" class="nav-traveller-option" role="tab" aria-selected="false">Non-Traveller</button>
+    </div>
+  `;
+  travellerBar.querySelectorAll('.nav-traveller-option').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      travellerBar.querySelectorAll('.nav-traveller-option').forEach((b) => {
+        b.classList.toggle('is-active', b === btn);
+        b.setAttribute('aria-selected', b === btn ? 'true' : 'false');
+      });
+    });
+  });
+
   const navWrapper = document.createElement('div');
   navWrapper.className = 'nav-wrapper';
+  navWrapper.append(travellerBar);
   navWrapper.append(nav);
   block.append(navWrapper);
 }

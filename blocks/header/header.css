@@ -6,6 +6,41 @@ header .nav-wrapper {
   position: fixed;
 }
 
+/* traveller / non-traveller toggle bar */
+header .nav-traveller {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 24px;
+  border-bottom: 1px solid #eee;
+}
+
+@media (width >= 900px) {
+  header .nav-traveller {
+    padding: 0 32px;
+  }
+}
+
+header .nav-traveller-toggle {
+  display: flex;
+}
+
+header .nav-traveller-option {
+  padding: 6px 24px;
+  border: none;
+  background-color: #f0f0f0;
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-xs, 14px);
+  font-weight: 700;
+  color: #666;
+  cursor: pointer;
+  border-radius: 12px 12px 0 0;
+}
+
+header .nav-traveller-option.is-active {
+  background: linear-gradient(90deg, #d31e4b, #6b2369);
+  color: #fff;
+}
+
 header nav {
   box-sizing: border-box;
   display: grid;
