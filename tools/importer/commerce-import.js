@@ -162,7 +162,36 @@ export default {
       },
     ];
 
-    const buildProductRows = () => STATIC_PRODUCTS.map((p) => {
+    // Travel Exclusive products — the exclusive "duo" gift sets shown in the
+    // second product row on the source page.
+    const TRAVEL_EXCLUSIVE_PRODUCTS = [
+      {
+        href: '/en/product/lanc-me-genifique-ultimate-serum-duo-mp00314692.html',
+        img: 'https://changiairport.scene7.com/is/image/changiairport/mp00314693-1-lanc-me-1778642140425',
+        badges: ['Exclusive', 'Promo'],
+        brand: 'Lancôme',
+        name: 'LANCÔME Genifique Ultimate Serum Duo',
+        price: 'S$369.30',
+      },
+      {
+        href: '/en/product/lanc-me-advanced-genifique-light-pearl-duo-mp00169732.html',
+        img: 'https://changiairport.scene7.com/is/image/changiairport/mp00169733-1-lanc-me-1759308170919',
+        badges: ['Exclusive', 'Promo'],
+        brand: 'Lancôme',
+        name: 'LANCÔME Advanced Genifique Light Pearl Duo',
+        price: 'From S$236.00',
+      },
+      {
+        href: '/en/product/lanc-me-absolue-the-eye-cream-duo-mp00306701.html',
+        img: 'https://changiairport.scene7.com/is/image/changiairport/mp00306702-1-lanc-me-1759309692080',
+        badges: ['Exclusive', 'Promo'],
+        brand: 'Lancôme',
+        name: 'LANCÔME Absolue The Eye Cream Duo',
+        price: 'S$351.40',
+      },
+    ];
+
+    const buildProductRows = (products) => products.map((p) => {
       const imgCell = document.createElement('div');
       if (p.badges && p.badges.length) {
         const badgeP = document.createElement('p');
@@ -198,20 +227,18 @@ export default {
       return [k, v];
     };
 
-    // Best Sellers — heading, no CTA.
+    // Best Sellers — centered heading, no CTA.
     const bestSellersBlock = WebImporter.DOMUtils.createTable([
       ['product-list-page'],
       configRow('title', 'Best Sellers'),
-      ...buildProductRows(),
+      ...buildProductRows(STATIC_PRODUCTS),
     ], document);
 
-    // Travel Exclusives — reuses the same products, adds a VIEW ALL BEAUTY CTA.
+    // Travel Exclusive — left-aligned heading, exclusive duo gift sets.
     const travelExclusivesBlock = WebImporter.DOMUtils.createTable([
-      ['product-list-page'],
-      configRow('title', 'Travel Exclusives'),
-      configRow('cta', 'VIEW ALL BEAUTY'),
-      configRow('ctaHref', '/en/category/beauty'),
-      ...buildProductRows(),
+      ['product-list-page (left)'],
+      configRow('title', 'Travel Exclusive'),
+      ...buildProductRows(TRAVEL_EXCLUSIVE_PRODUCTS),
     ], document);
 
     // STEP 2: clear — no DOM queries after this line

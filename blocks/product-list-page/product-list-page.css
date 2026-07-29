@@ -20,6 +20,15 @@
   gap: 16px;
 }
 
+/* left-aligned variant (e.g. Travel Exclusive) */
+.product-list-page.left .product-list-page-heading {
+  text-align: left;
+}
+
+.product-list-page.left .product-list-page-grid {
+  justify-content: flex-start;
+}
+
 @media (width >= 900px) {
   .product-list-page .product-list-page-grid {
     gap: 24px;
