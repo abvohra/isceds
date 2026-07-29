@@ -269,4 +269,79 @@ header nav .nav-sections ul > li > ul > li {
 /* tools */
 header nav .nav-tools {
   grid-area: tools;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* search bar */
+header nav .nav-search {
+  display: flex;
+  align-items: center;
+  flex: 0 1 auto;
+  width: 100%;
+  max-width: 340px;
+  height: 36px;
+  padding: 0 14px;
+  border: 1px solid #121212;
+  border-radius: 20px;
+  background-color: #fff;
+}
+
+header nav .nav-search-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin-right: 8px;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+header nav .nav-search-button .icon-search {
+  width: 18px;
+  height: 18px;
+  display: inline-block;
+  background-color: #6b2369;
+  mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"/></svg>') no-repeat center / contain;
+}
+
+header nav .nav-search-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: none;
+  outline: none;
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-xs, 14px);
+  color: #121212;
+  background: transparent;
+}
+
+/* tools links (Cart / Account / EN) */
+header nav#nav .nav-tools ul {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+header nav#nav .nav-tools ul li {
+  white-space: nowrap;
+}
+
+header nav#nav .nav-tools ul li a,
+header nav#nav .nav-tools ul li p {
+  font-size: var(--body-font-size-xs, 14px);
+  font-weight: 700;
+  color: #121212;
+  text-decoration: none;
+}
+
+@media (width < 900px) {
+  header nav .nav-search {
+    max-width: none;
+  }
 }

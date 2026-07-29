@@ -151,6 +151,22 @@ export default async function decorate(block) {
     });
   }
 
+  // Add a search bar to the tools area (matches the source header logo row).
+  const navTools = nav.querySelector('.nav-tools');
+  if (navTools) {
+    const search = document.createElement('form');
+    search.className = 'nav-search';
+    search.setAttribute('role', 'search');
+    search.action = '/en/search';
+    search.innerHTML = `
+      <button type="submit" class="nav-search-button" aria-label="Search">
+        <span class="icon icon-search"></span>
+      </button>
+      <input type="search" name="q" class="nav-search-input" placeholder="Search for products and brands" aria-label="Search for products and brands">
+    `;
+    navTools.prepend(search);
+  }
+
   // hamburger for mobile
   const hamburger = document.createElement('div');
   hamburger.classList.add('nav-hamburger');
