@@ -126,6 +126,8 @@ function badgeClass(label) {
   const key = label.toLowerCase();
   if (key === 'exclusive') return 'product-list-page-badge-exclusive';
   if (key === 'promo') return 'product-list-page-badge-promo';
+  if (key === 'giftwrap') return 'product-list-page-badge-giftwrap';
+  if (key === 'gift*' || key === 'gift') return 'product-list-page-badge-gift';
   if (/off$/.test(key)) return 'product-list-page-badge-discount';
   return 'product-list-page-badge-default';
 }

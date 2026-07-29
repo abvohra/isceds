@@ -114,6 +114,28 @@
   background-color: #333;
 }
 
+.product-list-page .product-list-page-badge-giftwrap {
+  background-color: #f3eef4;
+  color: #6b2369;
+  border: 1px solid #d9c9dd;
+}
+
+.product-list-page .product-list-page-badge-giftwrap::before {
+  content: '';
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 3px;
+  vertical-align: -1px;
+  background-color: #6b2369;
+  mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 7h-1.7c.4-.6.7-1.3.7-2 0-1.7-1.3-3-3-3-1.3 0-2.4.8-2.9 2H13c-.5-1.2-1.6-2-2.9-2C8.3 2 7 3.3 7 5c0 .7.3 1.4.7 2H6c-1.1 0-2 .9-2 2v3h1v7c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2v-7h1V9c0-1.1-.9-2-2-2zm-4-3c.6 0 1 .4 1 1s-.4 1-1 1-1-.4-1-1 .4-1 1-1zM10 4c.6 0 1 .4 1 1s-.4 1-1 1-1-.4-1-1 .4-1 1-1zm1 16H7v-7h4v7zm0-9H6V9h5v2zm6 9h-4v-7h4v7zm1-9h-5V9h5v2z"/></svg>') no-repeat center / contain;
+}
+
+.product-list-page .product-list-page-badge-gift {
+  background-color: #b8860b;
+  color: #fff;
+}
+
 .product-list-page .product-list-page-item-image img {
   width: 100%;
   aspect-ratio: 1 / 1;

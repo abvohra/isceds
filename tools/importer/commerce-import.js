@@ -168,7 +168,7 @@ export default {
       {
         href: '/en/product/lanc-me-genifique-ultimate-serum-mp00314690.html',
         img: 'https://changiairport.scene7.com/is/image/changiairport/mp00314691-1-lanc-me-1778643023701',
-        badges: ['Exclusive', 'Promo'],
+        badges: ['Exclusive', 'Giftwrap', 'Promo', 'Gift*'],
         brand: 'Lancôme',
         name: 'LANCÔME Genifique Ultimate Serum',
         price: 'From S$222.10',
@@ -176,7 +176,7 @@ export default {
       {
         href: '/en/product/lanc-me-id-le-l-eau-de-parfum-mp00170984.html',
         img: 'https://changiairport.scene7.com/is/image/changiairport/mp00170986-1-lanc-me-1759308179807',
-        badges: ['10% Off'],
+        badges: ['Giftwrap', '10% Off', 'Gift*'],
         brand: 'Lancôme',
         name: "LANCÔME Idôle L'Eau De Parfum",
         price: 'From S$143.10',
@@ -189,7 +189,7 @@ export default {
       {
         href: '/en/product/lanc-me-genifique-ultimate-serum-duo-mp00314692.html',
         img: 'https://changiairport.scene7.com/is/image/changiairport/mp00314693-1-lanc-me-1778642140425',
-        badges: ['Exclusive', 'Promo'],
+        badges: ['Exclusive', 'Giftwrap', 'Promo', 'Gift*'],
         brand: 'Lancôme',
         name: 'LANCÔME Genifique Ultimate Serum Duo',
         price: 'S$369.30',
@@ -197,7 +197,7 @@ export default {
       {
         href: '/en/product/lanc-me-advanced-genifique-light-pearl-duo-mp00169732.html',
         img: 'https://changiairport.scene7.com/is/image/changiairport/mp00169733-1-lanc-me-1759308170919',
-        badges: ['Exclusive', 'Promo'],
+        badges: ['Exclusive', 'Giftwrap', 'Promo', 'Gift*'],
         brand: 'Lancôme',
         name: 'LANCÔME Advanced Genifique Light Pearl Duo',
         price: 'From S$236.00',
@@ -205,7 +205,7 @@ export default {
       {
         href: '/en/product/lanc-me-absolue-the-eye-cream-duo-mp00306701.html',
         img: 'https://changiairport.scene7.com/is/image/changiairport/mp00306702-1-lanc-me-1759309692080',
-        badges: ['Exclusive', 'Promo'],
+        badges: ['Exclusive', 'Giftwrap', 'Promo', 'Gift*'],
         brand: 'Lancôme',
         name: 'LANCÔME Absolue The Eye Cream Duo',
         price: 'S$351.40',
