@@ -25,3 +25,28 @@
   aspect-ratio: 4 / 3;
   object-fit: cover;
 }
+
+/* Category tiles variant: square, rounded, image-only promo links */
+.cards.category > ul {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+@media (width >= 900px) {
+  .cards.category > ul {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.cards.category > ul > li {
+  border: none;
+  background-color: transparent;
+}
+
+.cards.category .cards-card-image {
+  line-height: 0;
+}
+
+.cards.category > ul > li img {
+  aspect-ratio: 1 / 1;
+  border-radius: 10px;
+}

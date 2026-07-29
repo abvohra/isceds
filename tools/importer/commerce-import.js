@@ -95,23 +95,27 @@ function buildHeroCarousel(document) {
   return WebImporter.DOMUtils.createTable([['hero-carousel'], ...rows], document);
 }
 
+// Category promo tiles — 4 square rounded image links (no captions), matching
+// the source. The masthead banner is intentionally excluded (it is a separate
+// section). Uses the `cards (category)` variant for image-only styling.
+const CATEGORY_TILES = [
+  { img: 'https://www.ishopchangi.com/content/dam/cagishop/brands/lancome/620.jpg', href: '/en/brand/lancome/skincare.html', alt: 'Skincare' },
+  { img: 'https://www.ishopchangi.com/content/dam/cagishop/brands/lancome/%E4%BA%A7%E5%93%81%E5%88%86%E7%B1%BB-ISC-620x620%20%E6%8B%B7%E8%B4%9D1.jpg', href: '/en/brand/lancome/makeup.html', alt: 'Makeup' },
+  { img: 'https://www.ishopchangi.com/content/dam/cagishop/brands/lancome/%E4%BA%A7%E5%93%81%E5%88%86%E7%B1%BB-ISC-620x620%20%E6%8B%B7%E8%B4%9D%2021.jpg', href: '/en/brand/lancome/fragrance.html', alt: 'Fragrance' },
+  { img: 'https://www.ishopchangi.com/content/dam/cagishop/brands/lancome/%E4%BA%A7%E5%93%81%E5%88%86%E7%B1%BB-ISC-620x620%20%E6%8B%B7%E8%B4%9D%2031.jpg', href: '/en/brand/lancome/view-all.html?cagPromotionExclusive=Exclusive', alt: 'View All' },
+];
+
 function parseCategoryCards(document) {
-  const tiles = [...document.querySelectorAll('a.inline-block > img.ms-image-width')];
-  if (tiles.length === 0) {
-    console.warn('⚠️ parseCategoryCards: no .ms-image-width tiles found');
-    return null;
-  }
-  const rows = [['cards']];
-  tiles.forEach((img) => {
-    const link = img.closest('a');
+  const rows = [['cards (category)']];
+  CATEGORY_TILES.forEach((tile) => {
     const cell = document.createElement('div');
-    cell.append(img);
-    if (link && link.getAttribute('href')) {
-      const a = document.createElement('a');
-      a.href = link.getAttribute('href');
-      a.textContent = link.getAttribute('href');
-      cell.append(a);
-    }
+    const link = document.createElement('a');
+    link.href = tile.href;
+    const img = document.createElement('img');
+    img.src = tile.img;
+    img.alt = tile.alt;
+    link.append(img);
+    cell.append(link);
     rows.push([cell]);
   });
   return WebImporter.DOMUtils.createTable(rows, document);
