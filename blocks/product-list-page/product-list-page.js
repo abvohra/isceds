@@ -159,6 +159,46 @@ function renderAuthoredProduct(row) {
   return li;
 }
 
+function buildCarousel(items) {
+  const carousel = document.createElement('div');
+  carousel.className = 'product-list-page-carousel';
+
+  const heading = document.createElement('h3');
+  heading.className = 'product-list-page-heading';
+  heading.textContent = 'Best Sellers';
+
+  const viewport = document.createElement('div');
+  viewport.className = 'product-list-page-viewport';
+
+  const track = document.createElement('ul');
+  track.className = 'product-list-page-grid';
+  items.forEach((li) => track.append(li));
+  viewport.append(track);
+
+  const prev = document.createElement('button');
+  prev.className = 'product-list-page-arrow product-list-page-arrow-prev';
+  prev.type = 'button';
+  prev.setAttribute('aria-label', 'Previous products');
+  prev.textContent = '‹';
+
+  const next = document.createElement('button');
+  next.className = 'product-list-page-arrow product-list-page-arrow-next';
+  next.type = 'button';
+  next.setAttribute('aria-label', 'Next products');
+  next.textContent = '›';
+
+  const scrollByCards = (dir) => {
+    const card = track.querySelector('.product-list-page-item');
+    const step = card ? card.getBoundingClientRect().width + 24 : viewport.clientWidth;
+    viewport.scrollBy({ left: dir * step, behavior: 'smooth' });
+  };
+  prev.addEventListener('click', () => scrollByCards(-1));
+  next.addEventListener('click', () => scrollByCards(1));
+
+  carousel.append(heading, prev, viewport, next);
+  return carousel;
+}
+
 export default async function decorate(block) {
   const rows = [...block.children];
   const productRows = rows.filter(isProductRow);
@@ -168,11 +208,9 @@ export default async function decorate(block) {
 
   // Authored static products take precedence — mirror the source page exactly.
   if (productRows.length > 0) {
+    const items = productRows.map((row) => renderAuthoredProduct(row));
     block.textContent = '';
-    const grid = document.createElement('ul');
-    grid.className = 'product-list-page-grid';
-    block.append(grid);
-    productRows.forEach((row) => grid.append(renderAuthoredProduct(row)));
+    block.append(buildCarousel(items));
     return;
   }
 
