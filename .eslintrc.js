@@ -15,4 +15,12 @@ module.exports = {
     'linebreak-style': ['error', 'unix'], // enforce unix linebreaks
     'no-param-reassign': [2, { props: false }], // allow modifying properties of param
   },
+  overrides: [
+    {
+      files: ['tools/importer/**/*.js'], // build-time import scripts may log diagnostics
+      rules: {
+        'no-console': 'off',
+      },
+    },
+  ],
 };
