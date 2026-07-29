@@ -11,18 +11,48 @@
 
 // --- Standard block parsers (document-scoped, return table nodes) ---
 
-function parseHeroBlock(document) {
-  const banner = document.querySelector('.master-banner');
-  if (!banner) {
-    console.warn('⚠️ parseHeroBlock: .master-banner not found');
-    return null;
-  }
-  const img = banner.querySelector('img');
-  if (!img) {
-    console.warn('⚠️ parseHeroBlock: no image inside .master-banner');
-    return null;
-  }
-  return WebImporter.DOMUtils.createTable([['hero'], [img]], document);
+// Masthead banner carousel — 4 rotating promotional banners, each linking to a
+// product. Built as static content mirroring the source slider.
+const HERO_SLIDES = [
+  {
+    img: 'https://www.ishopchangi.com/content/dam/cagishop/brands/lancome/GNF_ISHOP_1300X430_PC_EN_1.jpg',
+    href: '/en/product/lanc-me-genifique-ultimate-serum-mp00314690.html',
+    alt: 'Lancôme Génifique Ultimate Serum',
+  },
+  {
+    img: 'https://www.ishopchangi.com/content/dam/cagishop/brands/lancome/ABS_PC_EN_1300x430px1.jpg',
+    href: '/en/product/lanc-me-absolue-the-eye-cream-duo-mp00306701',
+    alt: 'Lancôme Absolue The Eye Cream Duo',
+  },
+  {
+    img: 'https://www.ishopchangi.com/content/dam/cagishop/brands/lancome/CLX_ISHOP_1300X430_PC_EN1.jpg',
+    href: '/en/product/lanc-me-clarifique-double-treatment-essence-mp00226693.html',
+    alt: 'Lancôme Clarifique Double Treatment Essence',
+  },
+  {
+    img: 'https://www.ishopchangi.com/content/dam/cagishop/brands/lancome/TIUW_ISHOP_1300X430_PC_EN.jpg',
+    href: '/en/product/lanc-me-teint-idole-ultra-wear-foundation-mp00055580.html',
+    alt: 'Lancôme Teint Idole Ultra Wear Foundation',
+  },
+];
+
+function buildHeroCarousel(document) {
+  const rows = HERO_SLIDES.map((slide) => {
+    const imgCell = document.createElement('div');
+    const img = document.createElement('img');
+    img.src = slide.img;
+    img.alt = slide.alt;
+    imgCell.append(img);
+
+    const linkCell = document.createElement('div');
+    const a = document.createElement('a');
+    a.href = slide.href;
+    a.textContent = slide.href;
+    linkCell.append(a);
+
+    return [imgCell, linkCell];
+  });
+  return WebImporter.DOMUtils.createTable([['hero-carousel'], ...rows], document);
 }
 
 function parseCategoryCards(document) {
@@ -61,7 +91,7 @@ export default {
     const main = document.body;
 
     // STEP 1: extract everything while the DOM is intact
-    const heroBlock = parseHeroBlock(document);
+    const heroCarousel = buildHeroCarousel(document);
     const cardsBlock = parseCategoryCards(document);
     const seoContent = extractSeoContent(document);
 
@@ -71,6 +101,7 @@ export default {
       {
         href: '/en/product/lanc-me-genifique-ultimate-serum-mp00314690.html',
         img: 'https://changiairport.scene7.com/is/image/changiairport/mp00314691-1-lanc-me-1778643023701',
+        badges: ['Exclusive', 'Promo'],
         brand: 'Lancôme',
         name: 'LANCÔME Genifique Ultimate Serum',
         price: 'From S$222.10',
@@ -78,6 +109,7 @@ export default {
       {
         href: '/en/product/lanc-me-id-le-l-eau-de-parfum-mp00170984.html',
         img: 'https://changiairport.scene7.com/is/image/changiairport/mp00170986-1-lanc-me-1759308179807',
+        badges: ['10% Off'],
         brand: 'Lancôme',
         name: "LANCÔME Idôle L'Eau De Parfum",
         price: 'From S$143.10',
@@ -86,6 +118,11 @@ export default {
 
     const productRows = STATIC_PRODUCTS.map((p) => {
       const imgCell = document.createElement('div');
+      if (p.badges && p.badges.length) {
+        const badgeP = document.createElement('p');
+        badgeP.textContent = p.badges.join(', ');
+        imgCell.append(badgeP);
+      }
       const link = document.createElement('a');
       link.href = p.href;
       const img = document.createElement('img');
@@ -115,10 +152,10 @@ export default {
     main.innerHTML = '';
 
     // STEP 3: rebuild sections in page order
-    // Section 1: masthead hero
-    if (heroBlock) {
+    // Section 1: masthead banner carousel
+    if (heroCarousel) {
       const heroSection = document.createElement('div');
-      heroSection.append(heroBlock);
+      heroSection.append(heroCarousel);
       main.append(heroSection);
       main.append(document.createElement('hr'));
     }

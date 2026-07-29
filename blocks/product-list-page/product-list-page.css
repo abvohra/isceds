@@ -81,8 +81,45 @@
 }
 
 .product-list-page .product-list-page-item-image {
+  position: relative;
   line-height: 0;
   padding: 12px;
+}
+
+.product-list-page .product-list-page-badges {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  z-index: 1;
+}
+
+.product-list-page .product-list-page-badge {
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.product-list-page .product-list-page-badge-exclusive {
+  background: linear-gradient(90deg, #d31e4b, #6b2369);
+}
+
+.product-list-page .product-list-page-badge-promo {
+  background-color: #d31e4b;
+}
+
+.product-list-page .product-list-page-badge-discount {
+  background-color: #6b2369;
+}
+
+.product-list-page .product-list-page-badge-default {
+  background-color: #333;
 }
 
 .product-list-page .product-list-page-item-image img {

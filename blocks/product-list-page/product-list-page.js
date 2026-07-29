@@ -121,6 +121,15 @@ function isProductRow(row) {
   return !!row.querySelector('picture, img');
 }
 
+// Badge styling class per known label; anything else uses the default pill.
+function badgeClass(label) {
+  const key = label.toLowerCase();
+  if (key === 'exclusive') return 'product-list-page-badge-exclusive';
+  if (key === 'promo') return 'product-list-page-badge-promo';
+  if (/off$/.test(key)) return 'product-list-page-badge-discount';
+  return 'product-list-page-badge-default';
+}
+
 function renderAuthoredProduct(row) {
   const cells = [...row.children];
   const li = document.createElement('li');
@@ -131,9 +140,29 @@ function renderAuthoredProduct(row) {
   if (link) wrapper.href = link;
   wrapper.className = 'product-list-page-item-link';
 
-  const picture = cells[0]?.querySelector('picture, img');
+  const imageCell = cells[0];
+  const picture = imageCell?.querySelector('picture, img');
   const imageWrap = document.createElement('div');
   imageWrap.className = 'product-list-page-item-image';
+
+  // Badges are authored as a comma-separated list in the image cell (as text,
+  // alongside the image) or as its own paragraph, e.g. "Exclusive, Promo".
+  const badgeText = [...(imageCell?.querySelectorAll('p') || [])]
+    .map((p) => p.textContent.trim())
+    .filter(Boolean)
+    .join(',');
+  if (badgeText) {
+    const badgeRow = document.createElement('div');
+    badgeRow.className = 'product-list-page-badges';
+    badgeText.split(',').map((b) => b.trim()).filter(Boolean).forEach((label) => {
+      const span = document.createElement('span');
+      span.className = `product-list-page-badge ${badgeClass(label)}`;
+      span.textContent = label;
+      badgeRow.append(span);
+    });
+    imageWrap.append(badgeRow);
+  }
+
   if (picture) {
     const img = picture.tagName === 'IMG' ? picture : picture.querySelector('img');
     if (img) imageWrap.append(createOptimizedPicture(img.src, img.alt || '', false, [{ width: '400' }]));
